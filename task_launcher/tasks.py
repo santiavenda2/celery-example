@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from app.celery import app
+from task_launcher.celery_app import app
 
 
 @app.task
@@ -24,10 +24,12 @@ def delay(d):
     time.sleep(d)
     return d
 
+
 @app.task
 def time():
     import datetime
     return datetime.datetime.now()
+
 
 @app.task
 def complex_method(d):
@@ -35,3 +37,13 @@ def complex_method(d):
     for k, v in d.iteritems():
         print k, v
         d_inverse[v] = k
+
+
+@app.task
+def call_method():
+    return time()
+
+
+@app.task
+def raise_exception():
+    raise RuntimeError("Excepcion de prueba")

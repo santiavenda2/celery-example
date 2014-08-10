@@ -1,0 +1,4 @@
+celery -A task_launcher.celery_app  worker -l info
+celery -A task_launcher.celery_app worker --loglevel=INFO --concurrency=10 -n worker1.%h
+
+celery -A task_launcher.celery_app flower
